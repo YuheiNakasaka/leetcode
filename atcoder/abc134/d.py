@@ -3,13 +3,16 @@
 N = int(input())
 a = list(map(int, input().split()))
 
-M = 0
-res = []
-for n in range(1, N+1):
-    ball = N // n
-    if ball % 2 == a[n - 1]:
-        M += 1
-        res.append(str(a[n - 1]))
+a = [0] + a
+b = [0 for i in range(N+1)]
+i = N
+while i > 0:
+    s = sum(b[i::i])
+    if a[i] != s % 2:
+        b[i] = 1
+    i -= 1
 
-print(M)
-print(' '.join(res))
+print(sum(b))
+for i, j in enumerate(b):
+    if j == 1:
+        print(i, end=' ')
