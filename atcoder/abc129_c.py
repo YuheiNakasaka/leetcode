@@ -1,19 +1,16 @@
 N, M = list(map(int, input().split(" ")))
-a = {}
+a = []
 for i in range(M):
-    j = int(input())
-    a[j] = 1
+    a.append(int(input()))
 
-# keys = a.keys()
-# for i in range(len(keys)):
-#     if keys[i] + 1
+stairs = [1 for _ in range(N+1)]
 
-left = 1
-right = 1
-cnt = 0
-for i in range(1, N):
-    if a.get(i, 0) == 1:
-        # cnt = left ~ rightの階乗を計算
-        left = i + 1
-    right += 1
+for v in a:
+    stairs[v] = 0
 
+for i in list(range(0, N - 1))[::-1]:
+    if stairs[i] == 0:
+        continue
+    stairs[i] = (stairs[i+1] + stairs[i+2]) % 1000000007
+
+print(stairs[0])
