@@ -1,38 +1,30 @@
-# 6 2
-# 1 2
-# 1 3
-# 2 4
-# 3 6
-# 2 5
-# 1 10
-# 1 10
-# 6 2 {1: [2, 3], 2: [4, 5], 3: [6]} [[1, 10], [1, 10]]
+import sys
+sys.setrecursionlimit(10**6)
+
 N, Q = list(map(int, input().split()))
-tree = {}
+# 双方向に張る
+tree = [[] for _ in range(N)]
 for i in range(N-1):
     a, b = list(map(int, input().split()))
-    items = tree.get(a, [])
-    items.append(b)
-    tree[a] = items
+    a -= 1
+    b -= 1
+    tree[a].append(b)
+    tree[b].append(a)
 
-q = []
+# queryのスコア表を作る
+total = [0 for _ in range(N)]
 for i in range(Q):
-    q.append(list(map(int, input().split())))
+    p, x = list(map(int, input().split()))
+    total[p - 1] += x
 
-ans = [0] * (N + 1)
+# dfs
+ans = [0 for _ in range(N)]
+def dfs(v, p, value):
+    value += total[v]
+    ans[v] = value
+    for c in tree[v]:
+        if c == p: continue
+        dfs(c, v, value)
 
-def recc_sum(p, x, tree_p):
-    for i in range(len(tree_p)):
-        index = tree_p[i]
-        ans[index] += x
-        if tree.get(index, None) != None:
-            recc_sum(index, x, tree[index])
-
-for i in range(Q):
-    p = q[i][0]
-    x = q[i][1]
-    ans[p] += x
-    if tree.get(p, None) != None:
-        recc_sum(p, x, tree[p])
-
-print(" ".join(list(map(str, ans[1:]))))
+dfs(0, -1, 0)
+print(" ".join(list(map(str, ans))))
