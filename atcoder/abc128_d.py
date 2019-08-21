@@ -4,7 +4,8 @@ N, K =  list(map(int, readline().split()))
 deque = list(map(int, readline().split()))
 
 items = []
-for l in range(K):
+ans = 0
+for l in range(K+1):
     for m in range(K - l + 1):
         if l + m > N: break
         litems = deque[0:l]
@@ -13,18 +14,8 @@ for l in range(K):
         arr.sort()
         items.append(arr)
 
-ans = 0
-for i in range(len(items)):
-    item = items[i]
-    if len(item) == 0: continue
-    d = K - len(item)
-    total = sum(item)
-    for j in range(d):
-        if len(item) <= j: break
-        if item[0] >= 0: break
-        if item[j] < 0:
-            total -= item[j]
-            if total > ans:
-                ans = total
+        d = K - l - m
+        for n in range(min(len(arr), d+1)):
+            ans = max(ans, sum(arr[n:]))
 
 print(ans)
