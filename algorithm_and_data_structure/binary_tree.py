@@ -21,7 +21,7 @@ def insert_tree(num, node):
         else:
             node.right = TreeNode(num)
 
-def search_tree(num, node):
+def search_node(num, node):
     if node == None:
         return
     if node.value == num:
@@ -31,14 +31,29 @@ def search_tree(num, node):
         return node
     if node.value > num:
         if node.left != None:
-            return search_tree(num, node.left)
+            return search_node(num, node.left)
         else:
             return
     else:
         if node.right != None:
-            return search_tree(num, node.right)
+            return search_node(num, node.right)
         else:
             return
+
+def delete_node(num, node):
+    parent_node = None
+    current_node = node
+    while current_node.value != num:
+        if current_node.value > num:
+            left_node = current_node.left
+            parent_node = current_node
+            current_node = left_node
+        else:
+            right_node = current_node.right
+            parent_node = current_node
+            current_node = right_node
+    print(parent_node.value, current_node.value)
+
 
 def traverse_tree(node):
     if node.left == None and node.right == None:
@@ -49,7 +64,6 @@ def traverse_tree(node):
     if node.right != None:
         print("parent: ", node.value, " right: ", node.right.value)
         traverse_tree(node.right)
-
 
 t = TreeNode(47)
 insert_tree(23, t)
@@ -65,10 +79,11 @@ insert_tree(88, t)
 
 traverse_tree(t)
 
-search_tree(23, t)
-search_tree(20, t)
-search_tree(72, t)
+search_node(23, t)
+search_node(20, t)
+search_node(72, t)
 
+delete_node(20, t)
 
 # == Output ==
 # parent:  47  left:  23
