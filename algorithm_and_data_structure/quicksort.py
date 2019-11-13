@@ -30,6 +30,32 @@ def quicksort(bottom, top, data):
     quicksort(bottom, upper - 1, data)
     quicksort(upper + 1, top, data)
 
+def quicksort2(bottom, top, data):
+    if bottom < top:
+        lower = bottom
+        upper = top
+        div = data[top//2]
+        while 1:
+            while data[lower] < div:
+                lower += 1
+            while data[upper] > div:
+                upper -= 1
+            if lower >= upper:
+                break
+            tmp = data[lower]
+            data[lower] = data[upper]
+            data[upper] = tmp
+            lower += 1
+            upper -= 1
+        quicksort2(bottom, lower - 1, data)
+        quicksort2(lower + 1, top, data)
+
+print('quicksort1')
 print(arr)
 quicksort(0, N - 1, arr)
+print(arr)
+
+print('quicksort2')
+print(arr)
+quicksort2(0, N - 1, arr)
 print(arr)
