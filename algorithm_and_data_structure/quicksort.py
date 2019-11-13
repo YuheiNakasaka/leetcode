@@ -23,7 +23,6 @@ def quicksort(bottom, top, data):
             data[lower] = data[upper]
             data[upper] = tmp
 
-    print(data)
     tmp = data[bottom]
     data[bottom] = data[upper]
     data[upper] = tmp
