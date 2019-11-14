@@ -1,3 +1,5 @@
+# sort済み用のArrayを使うのでメモリ領域を消費するが実装はシンプル
+# https://www.codereading.com/algo_and_ds/algo/merge_sort.html
 def merge_sort(aList):
     if len(aList) <= 1:
         return aList
