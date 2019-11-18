@@ -42,49 +42,48 @@ def search_node(num, node):
 
 def delete_node(num, node):
     parent_node = None
-    current_node = node
     direction = 0
-    while current_node.value != num:
-        if current_node.value > num:
-            left_node = current_node.left
-            parent_node = current_node
-            current_node = left_node
+    while node.value != num:
+        if node.value > num:
+            left_node = node.left
+            parent_node = node
+            node = left_node
             direction = -1
         else:
-            right_node = current_node.right
-            parent_node = current_node
-            current_node = right_node
+            right_node = node.right
+            parent_node = node
+            node = right_node
             direction = 1
     # 削除対象節が子を持たない場合
-    if current_node.left == None and current_node.right == None:
+    if node.left == None and node.right == None:
         if direction == -1:
             parent_node.left = None
         else:
             parent_node.right = None
     # 削除対象節が1つだけ子を持つ場合
-    elif current_node.left == None or current_node.right == None:
+    elif node.left == None or node.right == None:
         if direction == -1:
-            if current_node.left != None:
-                parent_node.left = current_node.left
+            if node.left != None:
+                parent_node.left = node.left
             else:
-                parent_node.left = current_node.right
+                parent_node.left = node.right
         else:
-            if current_node.left != None:
-                parent_node.right = current_node.left
+            if node.left != None:
+                parent_node.right = node.left
             else:
-                parent_node.right = current_node.right
+                parent_node.right = node.right
     else:
-        left_biggest = current_node.left
+        left_biggest = node.left
+        parent_node = node
         while left_biggest.right != None:
+            parent_node = left_biggest
             left_biggest = left_biggest.right
+            direction = 1
+        node.value = left_biggest.value
         if direction == -1:
-            left_biggest.left = None if current_node.left.value == left_biggest.value else current_node.left
-            left_biggest.right = None if current_node.right.value == left_biggest.value else current_node.right
-            parent_node.left = left_biggest
+            parent_node.left = left_biggest.left
         else:
-            left_biggest.left = None if current_node.left.value == left_biggest.value else current_node.left
-            left_biggest.right = None if current_node.right.value == left_biggest.value else current_node.right
-            parent_node.right = left_biggest
+            parent_node.right = left_biggest.left
 
 
 def traverse_tree(node):
