@@ -6,23 +6,20 @@ else:
     left = 0
     right = 10 ** 9
     mid = 0
-    while left < right:
+    dup = 0
+    prev = 0
+    while left != right:
         mid = (left + right) // 2
         x = A * mid + B * len(str(mid))
-        if x <= X:
+        if mid == prev:
+            dup += 1
+        if dup > 10:
             break
+        prev = mid
+        if x < X:
+            left = mid
         elif x > X:
             right = mid
         else:
             break
-
-    while True:
-        x = A * mid + B * len(str(mid))
-        if x >= X:
-            break
-        mid += 1
-
-    if mid > 0:
-        print(min(mid-1, 10**9))
-    else:
-        print(0)
+    print(mid)
