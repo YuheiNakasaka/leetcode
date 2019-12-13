@@ -1,23 +1,16 @@
-import math
+# (A ~ B までの個数) - (Cで割り切れるもの + Dで割り切れるもの - CDの最小公倍数で割り切れるもの)
 A,B,C,D = list(map(int, input().split()))
 
-# ユークリッドの互除法で最大公約数を計算
-# 最大公倍数cd = C * D / 最大公約数
-# をmathを使わず計算する
-cd = int((C * D) / math.gcd(C, D))
+def euc(a, b):
+    a, b = [max(a, b), min(a, b)]
+    if b == 0:
+        return a
+    else:
+        return euc(b, a % b)
 
-bc = B // C
-bd = B // D
-bcd = B // cd
-ac = (A - 1) // C
-ad = (A - 1) // D
-acd = (A - 1) // cd
+Cdiv = (B // C) - ((A-1) // C)
+Ddiv = (B // D) - ((A-1) // D)
+E = (C * D) // euc(C, D)
+CDdiv = (B // E) - ((A-1) // E)
 
-bdiv = bc + bd - bcd
-adiv = ac + ad - acd
-
-alldiv = bdiv - adiv
-
-ans = B - A + 1 - alldiv
-
-print(int(ans))
+print((B - A + 1) - (Cdiv + Ddiv - CDdiv))
